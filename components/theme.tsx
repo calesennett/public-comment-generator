@@ -32,7 +32,7 @@ export const theme: Theme = {
     primary: {
       bg: 'black',
       color: 'white',
-      border: (theme) => `1px solid ${theme.colors.text}`,
+      border: '1px solid black',
       cursor: 'pointer',
       display: 'inline-flex',
       alignItems: 'center',
