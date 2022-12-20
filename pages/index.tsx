@@ -14,11 +14,11 @@ export default function Home() {
   const [comment, setComment] = useState("")
   const [submitting, setSubmitting] = useState(false)
 
-  async function handleGenerateComment(e: React.FormEvent<HTMLInputElement>) {
+  async function handleGenerateComment(e: React.SyntheticEvent) {
     e.preventDefault()
 
-    var formData = new FormData(e.currentTarget);
-    let formObject = Object.fromEntries(formData.entries());
+    const formData = new FormData(e.currentTarget as HTMLFormElement)
+    const formObject = Object.fromEntries(formData.entries())
 
     setSubmitting(true)
     const res = await fetch('/api/comments', {
