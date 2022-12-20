@@ -6,7 +6,7 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+const commentsHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   const prompt = `Write a 2 minute public comment ${req.body.commentPosition} ${req.body.issue}`
 
   const completion = await openai.createCompletion({
@@ -17,3 +17,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   res.status(200).json({ comment: completion.data.choices[0].text })
 }
+
+export default commentsHandler

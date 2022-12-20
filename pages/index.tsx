@@ -102,8 +102,8 @@ export default function Home() {
               >
                 Public comment
               </Heading>
-              {comment.split('\n').map((paragraph) => (
-                <Box pb={2}>
+              {comment.split('\n').map((paragraph, idx) => (
+                <Box key={idx} pb={2}>
                   <Text sx={{fontSize: 4, display: 'block'}}>{paragraph}</Text>
                 </Box>
               ))}
