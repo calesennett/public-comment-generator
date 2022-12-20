@@ -17,7 +17,7 @@ export default function Home() {
   async function handleGenerateComment(e: React.FormEvent<HTMLInputElement>) {
     e.preventDefault()
 
-    var formData = new FormData(e.target);
+    var formData = new FormData(e.currentTarget);
     let formObject = Object.fromEntries(formData.entries());
 
     setSubmitting(true)
