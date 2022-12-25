@@ -71,6 +71,21 @@ export const theme: Theme = {
       '&:focus': {
         outline: 'none',
       },
-    }
+    },
+    textarea: {
+      color: 'text',
+      fontWeight: 700,
+      fontFamily: 'heading',
+      lineHeight: 'heading',
+      fontSize: 5,
+      pl: 0,
+      py: 0,
+      border: 'none',
+      bg: 'transparent',
+      '&:focus': {
+        outline: 'none',
+      },
+      resize: 'none',
+    },
   },
 }
