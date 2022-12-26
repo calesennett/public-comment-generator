@@ -1,10 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { Configuration, OpenAIApi } from 'openai'
 
+export const config = {
+  runtime: 'experimental-edge',
+}
+
 const configuration = new Configuration({
   apiKey: process.env.OPEN_AI_SECRET_KEY,
-});
-const openai = new OpenAIApi(configuration);
+})
+const openai = new OpenAIApi(configuration)
 
 const commentsHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   const prompt = `Write a 2 minute public comment ${req.body.commentPosition} ${req.body.issue}`
