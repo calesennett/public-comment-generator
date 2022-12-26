@@ -35,10 +35,14 @@ export default function Home() {
       }),
     })
 
-    const data = await res.json()
-
-    setComment(data.comment)
-    setSubmitting(false)
+    try {
+      const data = await res.json()
+      setComment(data.comment)
+      setSubmitting(false)
+    } catch (err) {
+      setComment('Failed to generated comment. Please try again.')
+      setSubmitting(false)
+    }
   }
 
   return (

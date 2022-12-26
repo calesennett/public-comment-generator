@@ -1,10 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { Configuration, OpenAIApi } from 'openai'
 
-export const config = {
-  runtime: 'experimental-edge',
-}
-
 const configuration = new Configuration({
   apiKey: process.env.OPEN_AI_SECRET_KEY,
 })
