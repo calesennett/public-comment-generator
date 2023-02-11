@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import Head from 'next/head'
 import {
   Container,
@@ -12,10 +12,14 @@ import {
 } from 'theme-ui'
 import TextareaAutosize from 'react-textarea-autosize'
 import styles from '../styles/Home.module.css'
+import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 export default function Home() {
   const [comment, setComment] = useState("")
   const [submitting, setSubmitting] = useState(false)
+  const [copied, setCopied] = useState(false)
+
+  const commentRef = useRef()
 
   async function handleGenerateComment(e: React.SyntheticEvent) {
     e.preventDefault()
@@ -24,6 +28,7 @@ export default function Home() {
     const formObject = Object.fromEntries(formData.entries())
 
     setSubmitting(true)
+    setCopied(false)
     const res = await fetch('/api/comments', {
       method: 'POST',
       headers: {
@@ -101,22 +106,31 @@ export default function Home() {
           </form>
           
           {comment && !submitting && (
-            <Box pt={5}>
-              <Heading
-                as="h5"
-                sx={{
-                  letterSpacing: '0.05em',
-                  textTransform: 'uppercase', 
-                }}
-              >
-                Public comment
-              </Heading>
-              {comment.split('\n').map((paragraph, idx) => (
-                <Box key={idx} pb={2}>
-                  <Text sx={{fontSize: 4, display: 'block'}}>{paragraph}</Text>
+            <>
+              <Box pt={5}>
+                <Heading
+                  as="h5"
+                  sx={{
+                    letterSpacing: '0.05em',
+                    textTransform: 'uppercase', 
+                  }}
+                >
+                  Public comment
+                </Heading>
+                <Box ref={commentRef}>
+                  {comment.split('\n').map((paragraph, idx) => (
+                    <Box key={idx} pb={2}>
+                      <Text sx={{fontSize: 4, display: 'block'}}>{paragraph}</Text>
+                    </Box>
+                  ))}
                 </Box>
-              ))}
-            </Box>
+              </Box>
+              <Box pt={4}>
+                <CopyToClipboard text={comment} onCopy={() => setCopied(true)}>
+                  <Button sx={{ fontSize: 1 }}>{copied ? "Copied!" : "Copy comment"}</Button>
+                </CopyToClipboard>
+              </Box>
+            </>
           )}
         </Container>
       </main>
