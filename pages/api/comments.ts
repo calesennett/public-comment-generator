@@ -18,8 +18,7 @@ export default async function commentsHandler(req: NextApiRequest, res: NextApiR
     messages: [
       { role: "system", content: "You like to help people generate public comments to read during city council meetings." },
       { role: "user", content: prompt }
-    ],
-    max_tokens: 512
+    ]
   })
 
   res.status(200).json({comment: completion.data.choices[0]?.message?.content})
