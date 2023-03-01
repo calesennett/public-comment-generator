@@ -1,3 +1,4 @@
+import { NextApiRequest, NextApiResponse } from 'next'
 import { Configuration, OpenAIApi } from 'openai'
 
 const configuration = new Configuration({
@@ -5,7 +6,7 @@ const configuration = new Configuration({
 })
 const openai = new OpenAIApi(configuration)
 
-export default async function commentsHandler(req, res) {
+export default async function commentsHandler(req: NextApiRequest, res: NextApiResponse) {
   const { commentPosition, issue } = req.body as {
     commentPosition?: string;
     issue?: string;
