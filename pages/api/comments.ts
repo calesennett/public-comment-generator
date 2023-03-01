@@ -1,42 +1,25 @@
 import { Configuration, OpenAIApi } from 'openai'
-import fetchAdapter from '@vespaiach/axios-fetch-adapter'
-
-export const config = {
-  runtime: 'edge',
-}
 
 const configuration = new Configuration({
   apiKey: process.env.OPEN_AI_SECRET_KEY,
-  baseOptions: {
-    adapter: fetchAdapter
-  }
 })
 const openai = new OpenAIApi(configuration)
 
-const commentsHandler = async (req: Request) => {
-  const { commentPosition, issue } = (await req.json()) as {
+export default async function commentsHandler(req, res) {
+  const { commentPosition, issue } = req.body as {
     commentPosition?: string;
     issue?: string;
   };
   const prompt = `Write a 2 minute public comment ${commentPosition} ${issue}`
 
-  const completion = await openai.createCompletion({
-    model: 'text-davinci-003',
-    prompt,
+  const completion = await openai.createChatCompletion({
+    model: 'gpt-3.5-turbo',
+    messages: [
+      { role: "system", content: "You like to help people generate public comments to read during city council meetings." },
+      { role: "user", content: prompt }
+    ],
     max_tokens: 512
   })
 
-  return new Response(
-    JSON.stringify({
-      comment: completion.data.choices[0].text
-    }),
-    {
-      status: 200,
-      headers: {
-        'content-type': 'application/json'
-      }
-    }
-  )
+  res.status(200).json({comment: completion.data.choices[0]?.message?.content})
 }
-
-export default commentsHandler
